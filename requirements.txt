@@ -1,0 +1,8 @@
+streamlit
+pandas
+folium
+re
+overpy
+Geocoded
+requests
+streamlit-option-menu
