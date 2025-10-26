@@ -2,6 +2,7 @@ streamlit
 pandas
 folium
 overpy
-Geocoded
+geocoder
 requests
 streamlit-option-menu
+re
