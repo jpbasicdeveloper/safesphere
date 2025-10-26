@@ -5,3 +5,4 @@ overpy
 geocoder
 requests
 streamlit-option-menu
+streamlit-folium
