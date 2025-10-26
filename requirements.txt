@@ -6,3 +6,4 @@ geocoder
 requests
 streamlit-option-menu
 streamlit-folium
+geopy
