@@ -1,7 +1,6 @@
 streamlit
 pandas
 folium
-re
 overpy
 Geocoded
 requests
