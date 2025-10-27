@@ -7,6 +7,7 @@ import overpy
 from geopy.distance import geodesic
 import geocoder
 from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderUnavailable, GeocoderTimedOut
 import requests
 from streamlit_option_menu import option_menu
 import seaborn as sns
