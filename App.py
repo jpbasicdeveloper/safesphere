@@ -179,13 +179,17 @@ def helpCenters():
 
     def get_city_from_coords(lat, lon):
         geolocator = Nominatim(user_agent="city_lookup")
-        location = geolocator.reverse((lat, lon), language="en")
+        try:
+            location = geolocator.reverse((lat, lon), language="en")
         
-        if location and "address" in location.raw:
-            address = location.raw["address"]
-            city = address.get("city") or address.get("town") or address.get("village") or address.get("county")
-            return city
-        return "City not found"
+            if location and "address" in location.raw:
+                address = location.raw["address"]
+                city = address.get("city") or address.get("town") or address.get("village") or address.get("county")
+                return city
+            return "City not found"
+        except (GeocoderUnavailable, GeocoderTimedOut) as e:
+            return "City not found"
+            
 
 
     if "user_location" not in st.session_state:
