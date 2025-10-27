@@ -190,11 +190,12 @@ def helpCenters():
 
     if "user_location" not in st.session_state:
         g = geocoder.ip('me')
-        if g.ok:
-            st.session_state["user_location"] = tuple(g.latlng)
-        else:
-            st.session_state["user_location"] = (40.7128, -74.0060) 
+        #if g.ok:
+            #st.session_state["user_location"] = tuple(g.latlng)
+        #else:
+            #st.session_state["user_location"] = (40.7128, -74.0060) 
 
+    st.session_state["user_location"] = (37.3382, -121.8863)
     st.header(f"🆘 Nearby Help Centers in city")
     #st.session_state["user_location"]
     user_lat, user_lon = st.session_state["user_location"]
