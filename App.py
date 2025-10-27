@@ -187,9 +187,9 @@ def helpCenters():
                 address = location.raw["address"]
                 city = address.get("city") or address.get("town") or address.get("village") or address.get("county")
                 return city
-            return "City not found"
+            return "San Jose"
         except (GeocoderUnavailable, GeocoderTimedOut) as e:
-            return "City not found"
+            return "San Jose"
             
 
 
