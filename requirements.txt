@@ -7,3 +7,5 @@ requests
 streamlit-option-menu
 streamlit-folium
 geopy
+seaborn
+matplotlib

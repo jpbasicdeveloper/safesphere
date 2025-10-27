@@ -9,6 +9,10 @@ import geocoder
 from geopy.geocoders import Nominatim
 import requests
 from streamlit_option_menu import option_menu
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
 
 
 
@@ -335,6 +339,48 @@ def crimeAlerts():
         st_folium(m, width=800, height=500)
     else:
         st.warning("No crimes found for the selected filters.")
+
+    # Set seaborn style
+    sns.set(style="whitegrid", palette="muted")
+
+    st.subheader(f"{city} Crime Alerts — Top 10 Crime Categories")
+    #st.write("Raw data sample:")
+    #st.dataframe(df.head())
+    #st.write("Columns:", list(df.columns))
+
+    # Suppose the column we want is called 'category' (adjust if different)
+    
+    if(city=="Oakland"):
+        category_col = "crimetype"  # change this if the column name differs
+    elif(city=="Los Angeles"):
+        category_col = "crm_cd_desc"  # change this if the column name differs
+    else:
+        category_col = "incident_category"  # change this if the column name differs
+    
+
+    colors = sns.color_palette("viridis", 10)
+
+    if category_col not in df.columns:
+        st.error(f"Column '{category_col}' not found in data. Please inspect and update.")
+    else:
+        df2 = df.dropna(subset=[category_col])
+        top = df2[category_col].value_counts().nlargest(10)
+        #st.write("Top 10 crime categories and their counts:")
+        #st.write(top)
+
+        fig, ax = plt.subplots(figsize=(10,6))
+        sns.barplot(
+            x=top.values,
+            y=top.index,
+            palette=colors,
+            ax=ax
+        )
+        ax.set_xlabel("Number of Incidents")
+        ax.set_ylabel("Crime Category")
+        ax.set_title(f"Top 10 Crime Categories in {city} (CrimeWatch data)")
+        st.pyplot(fig)
+
+
 
 
 # --- Sidebar Navigation Menu ---
