@@ -63,18 +63,21 @@ def realTimeAlerts():
         st.write("Please select a state to continue.")  
 
     if st.button("Get Alerts"):
+        #Get current alerts for the state selected
         url = f"https://api.weather.gov/alerts/active?area={state_code.upper()}"
         response = requests.get(url)
         data = response.json()
         alerts = data.get("features", [])
         if alerts:
-            for alert in alerts[:5]:
+            #Highlighting top 10 alerts
+            for alert in alerts[:10]:
+                #Show alert headline and description
                 st.subheader(alert["properties"]["headline"])
                 st.write(alert["properties"]["description"])
         else:
             st.write("No active alerts for this area.")
 
-
+#static emergency checklist
 def emergencyChecklist():
     st.header("Emergency Preparedness Checklist")
     checklist = [
@@ -132,8 +135,8 @@ def helpCenters():
 
         return sorted(centers, key=lambda x: x["distance_km"])
 
-
-    def find_help_centers_updated(lat, lon, radius_km=5):
+    #Function to help find help centers
+    def find_help_centers_updated(lat, lon, radius_km=10):
         api = overpy.Overpass()
         query = f"""
         [out:json];
@@ -148,6 +151,7 @@ def helpCenters():
         """
 
         result = api.query(query)
+        #st.write(result.nodes)
         
         centers = []
         for node in result.nodes:
@@ -199,8 +203,11 @@ def helpCenters():
             #st.session_state["user_location"] = tuple(g.latlng)
         #else:
             #st.session_state["user_location"] = (40.7128, -74.0060) 
+    #San Jose
+    #st.session_state["user_location"] = (37.3382, -121.8863)
 
-    st.session_state["user_location"] = (37.3382, -121.8863)
+    #School
+    st.session_state["user_location"] = (37.57, -122.02)
     st.header(f"🆘 Nearby Help Centers in city")
     #st.session_state["user_location"]
     user_lat, user_lon = st.session_state["user_location"]
@@ -213,9 +220,11 @@ def helpCenters():
                 
     for c in help_centers[:50]:
         #st.write(f"**{c['type'].title()}**: {c['name']} ({c['distance_km']} km away)")
+        #st.write(c)
         amenity_type = c['type']
-        if amenity_type not in examples:
-            examples[amenity_type] = c
+        if(c['address']!= "Address not available"):
+            if amenity_type not in examples:
+                examples[amenity_type] = c
 
     # Print one of each
     for amenity_type, service in examples.items():
@@ -228,7 +237,7 @@ def helpCenters():
     
 
 
-
+#Function to print crime alerts for top CA cities
 def crimeAlerts():
     CITY_URLS = {
         "Oakland": "https://data.oaklandca.gov/resource/ppgh-7dqv.csv",
@@ -325,6 +334,7 @@ def crimeAlerts():
 
 
     # ---------- MAP ----------
+    # Code to plot map with lat long
     st.subheader(f"🗺️ {city} Crime Map")
     if not df.empty:
         avg_lat = df["latitude"].astype(float).mean()
@@ -371,9 +381,8 @@ def crimeAlerts():
     else:
         df2 = df.dropna(subset=[category_col])
         top = df2[category_col].value_counts().nlargest(10)
-        #st.write("Top 10 crime categories and their counts:")
-        #st.write(top)
-
+        
+        # Code to print the bar chart
         fig, ax = plt.subplots(figsize=(10,6))
         sns.barplot(
             x=top.values,
