@@ -12,14 +12,14 @@ The app features four core functions:
 SafeSphere uses open datasets from local city and local state APIs. The data is cleaned and visualized with Python, Streamlit, Matplotlib, and Seaborn.
 
 # How to run
-# 1.Clone the repository
+1.Clone the repository
 git clone https://github.com/<your-username>/SafeSphere.git
 cd SafeSphere
 
-# 2. Install dependencies
+2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Run the app 
+3. Run the app 
 streamlit run app.py
 
 Then open the local URL that appears in your terminal.
